@@ -1,6 +1,7 @@
 package rsa
 
-func generateKeys() (int, int, int) {
+// GenerateKeys generate the public and private keys for RSA-16 bit
+func GenerateKeys() (int, int, int) {
 	p, q := 34667, 44207
 	N := p * q
 	phiN := (p - 1) * (q - 1)

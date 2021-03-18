@@ -1,7 +1,8 @@
 package rsa
 
 // GenerateKeys generate the public and private keys for RSA-16 bit
-func GenerateKeys(int p, int q) (int, int, int) {
+// The output contains, N, exponent and private key in sequence
+func GenerateKeys(p int, q int) (int, int, int) {
 	// Very random, believe me
 	// p, q := 34667, 44207
 	N := p * q
@@ -13,7 +14,7 @@ func GenerateKeys(int p, int q) (int, int, int) {
 	return N, e, pk
 }
 
-// modInverse takes to values (num and mod in sequence) and calculate the modulo inverse of num with mod 
+// modInverse takes to values (num and mod in sequence) and calculate the modulo inverse of num with mod
 func modInverse(num int, mod int) int {
 	num %= mod
 	inverse := recurseModInverse(mod, num, 0, 1)

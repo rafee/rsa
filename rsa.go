@@ -29,7 +29,7 @@ func recurseModInverse(num1 int, num2 int, p0 int, p1 int) int {
 	}
 
 	p0, p1 = p1, (p0 - p1*(num1/num2))
-	//  print(num1, num1//num2, num1 % num2, p1)
+	print(num1, num1/num2, num1%num2, p1)
 	num1, num2 = num2, num1%num2
 	return recurseModInverse(num1, num2, p0, p1)
 }

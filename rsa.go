@@ -18,6 +18,9 @@ func GenerateKeys(p int, q int) (int, int, int) {
 func modInverse(num int, mod int) int {
 	num %= mod
 	inverse := recurseModInverse(mod, num, 0, 1)
+	for inverse < 0 {
+		inverse += mod
+	}
 	return inverse % mod
 }
 

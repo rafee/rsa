@@ -1,6 +1,7 @@
 package rsa
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 )
@@ -10,6 +11,7 @@ import (
 func GenerateKeys(seed int) (int, int, int) {
 	p, q := generateRandomPrimes(seed)
 	N := p * q
+	fmt.Println(p, q)
 	phiN := (p - 1) * (q - 1)
 
 	e := generateExponent(phiN, 1<<16)

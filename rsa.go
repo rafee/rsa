@@ -86,16 +86,18 @@ func generateRandomPrimes(seed int) (int, int) {
 	return p, q
 }
 
-func SquareAndMultiply(input int, exp int, N int) int {
-	res := input
+// SquareAndMultiply uses the well-known square and multiply algorithm to calculate the modulo exponent of a given number
+// The function takes the inputs in the sequence base, exponent and modulo in corresponding sequence
+func SquareAndMultiply(base int, exp int, modulo int) int {
+	res := base
 	bin := strconv.FormatInt(int64(exp), 2)
 	for e := 1; e < len(bin); e++ {
-		// res = (res * input) % N
-		res *= res
+		res = res * res
+		res %= modulo
 		if bin[e] == '1' {
-			res *= input
+			res = res * base
+			res %= modulo
 		}
-		res %= N
 	}
 	return res
 }

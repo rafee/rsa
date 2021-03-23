@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"strconv"
 )
 
 // GenerateKeys generate the public and private keys for RSA-16 bit
@@ -86,9 +87,15 @@ func generateRandomPrimes(seed int) (int, int) {
 }
 
 func SquareAndMultiply(input int, exp int, N int) int {
-	c := 1
-	for e := 0; e < exp; e++ {
-		c = (c * input) % N
+	res := input
+	bin := strconv.FormatInt(int64(exp), 2)
+	for e := 1; e < len(bin); e++ {
+		// res = (res * input) % N
+		res *= res
+		if bin[e] == '1' {
+			res *= input
+		}
+		res %= N
 	}
-	return c
+	return res
 }

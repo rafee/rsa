@@ -84,3 +84,11 @@ func generateRandomPrimes(seed int) (int, int) {
 
 	return p, q
 }
+
+func SquareAndMultiply(input int, exp int, N int) int {
+	c := 1
+	for e := 0; e < exp; e++ {
+		c = (c * input) % N
+	}
+	return c
+}

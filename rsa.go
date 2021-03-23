@@ -14,16 +14,16 @@ func GenerateKeys(seed int) (int, int, int) {
 	fmt.Println(p, q)
 	phiN := (p - 1) * (q - 1)
 
-	e := generateExponent(phiN, 1<<16)
+	e := generateExponent(phiN, 1<<15)
 	pk := modInverse(e, phiN)
 	return N, e, pk
 }
 
-func generateExponent(phiN int, max int) int {
-	for gcd(phiN, max) != 1 {
-		max--
+func generateExponent(phiN int, min int) int {
+	for gcd(phiN, min) != 1 {
+		min++
 	}
-	return max
+	return min
 }
 
 func gcd(a int, b int) int {

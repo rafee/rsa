@@ -3,7 +3,6 @@ package rsa
 import (
 	"fmt"
 	"math"
-	"math/big"
 	"math/rand"
 	"strconv"
 )
@@ -90,16 +89,16 @@ func generateRandomPrimes(seed int) (int, int) {
 // SquareAndMultiply uses the well-known square and multiply algorithm to calculate the modulo exponent of a given number
 // The function takes the inputs in the sequence base, exponent and modulo in corresponding sequence
 func SquareAndMultiply(base int, exp int, modulo int) int {
-	res := big.NewInt(int64(base))
-	bigBase := big.NewInt(int64(base))
-	bigModulo := big.NewInt(int64(modulo))
+	// res, bigBase, bigModulo := big.NewInt(int64(base)), big.NewInt(int64(base)), big.NewInt(int64(modulo))
+	res := base
 	bin := strconv.FormatInt(int64(exp), 2)
 	for e := 1; e < len(bin); e++ {
-		res.Mul(res, res)
+		res *= res
+		res %= modulo
 		if bin[e] == '1' {
-			res.Mul(res, bigBase)
+			res *= base
+			res %= modulo
 		}
-		res.Mod(res, bigModulo)
 	}
-	return int(res.Int64())
+	return int(res)
 }

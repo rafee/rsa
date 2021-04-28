@@ -20,6 +20,10 @@ func GenerateKeys(seed int) (int, int, int) {
 	return N, e, pk
 }
 
+// generateExponent takes the phiN and a minimum value as input and after that
+// increments till gcd(phiN, min) == 1.  While there might be a possible way to
+// predit phiN via opposite calculation given that e is a public value and min
+// is constant in our algorithm, I didn't consider this.
 func generateExponent(phiN int, min int) int {
 	for gcd(phiN, min) != 1 {
 		min++
@@ -27,6 +31,7 @@ func generateExponent(phiN int, min int) int {
 	return min
 }
 
+// cgcd computes gsd of two given integers
 func gcd(a int, b int) int {
 	if a < b {
 		a, b = b, a
@@ -74,23 +79,28 @@ func isPrime(num int) bool {
 func generateRandomPrimes(seed int) (int, int) {
 	rand.Seed(int64(seed))
 	min, max := 1<<15, 1<<16
-	p := rand.Intn(max-min) + min
-	for !isPrime(p) {
+	var p, q int
+	for {
 		p = rand.Intn(max-min) + min
+		if isPrime(p) {
+			break
+		}
 	}
-	q := rand.Intn(max-min) + min
 	for !isPrime(q) {
 		q = rand.Intn(max-min) + min
+		if isPrime(q) {
+			break
+		}
 	}
 
 	return p, q
 }
 
 // SquareAndMultiply uses the well-known square and multiply algorithm to calculate the modulo exponent of a given number
-// The function takes the inputs in the sequence base, exponent and modulo in corresponding sequence
+// The function takes the inputs base, exponent and modulo in corresponding sequence
 func SquareAndMultiply(base int, exp int, modulo int) int {
-	// res, bigBase, bigModulo := big.NewInt(int64(base)), big.NewInt(int64(base)), big.NewInt(int64(modulo))
 	res := base
+	// converst the number to a string of 0 and 1 in binary
 	bin := strconv.FormatInt(int64(exp), 2)
 	for e := 1; e < len(bin); e++ {
 		res *= res
@@ -100,5 +110,5 @@ func SquareAndMultiply(base int, exp int, modulo int) int {
 			res %= modulo
 		}
 	}
-	return int(res)
+	return res
 }
